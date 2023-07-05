@@ -16,24 +16,25 @@
                     <tr>
                       <th> Kategori Adı </th>
                       <th> Sıra </th>
-                      <th> Eylem </th>
+                      <th> Eylem </th> 
                      
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="py-1">
-                        <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
-                      </td>
-                      <td> Herman Beck </td>
-                      <td>
-                        <div class="progress">
-                          <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                      </td>
-                      <td> Düzenle </td>
-                      <td> Sil </td>
-                    </tr>
+                    @foreach ($categories as  $category)
+                      <tr>
+                        <td class="py-1">
+                          {{ $category->name }}
+                        </td>
+                        <td> {{ $category->order }} </td>
+                      
+                        <td> 
+                          <a href=" {{ route('category.edit', ['category'=>$category->id]) }} " class="btn btn-gradient-info btn-rounded btn-fw"> Düzenle </a>
+                          <a href="" class="btn btn-gradient-danger btn-rounded btn-fw"> Sil </a>
+                        </td>
+                      
+                      </tr>
+                    @endforeach  
 
                   </tbody>
                 </table>

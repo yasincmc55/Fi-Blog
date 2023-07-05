@@ -10,7 +10,8 @@ use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     public function index(){
-        return view('dashboard.category.index');
+        $categories = Category::all();
+        return view('dashboard.category.index')->with('categories',$categories);
     }
 
     public function show(){
@@ -29,6 +30,17 @@ class CategoryController extends Controller
          $category->parent_id = $request->parent_id;
          $category->save();
          return redirect()->to(route('category.index'));
+
+    }
+
+    /**
+     *  Laravel automatically resolves the {category} parameter in the route and fetches the corresponding Category model instance based on the ID provided. This saves you the step of manually fetching the category from the database. However, in this case, you need to make sure that the route parameter name ({category}) matches the parameter name in the controller method ($category).
+     */
+    //eğer view'e birden fazla değer göndermek istiyorsak compact yapısı kullanılır
+
+    public function edit(Category $category){
+        $categories = Category::all();
+        return view('dashboard.category.edit',compact('categories','category'));
 
     }
 }
