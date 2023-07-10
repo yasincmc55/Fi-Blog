@@ -11,7 +11,19 @@ use Illuminate\Support\Str;
 class PostController extends Controller
 {
     public function index(){
-        return view('dashboard.posts.index');   
+        $posts = Post::all();
+
+        return view('dashboard.posts.index',compact('posts')); 
+        $title = limitString($)
+    }
+
+    private function limitString($string, $limit)
+    {
+        if (strlen($string) <= $limit) {
+            return $string;
+        } else {
+            return substr($string, 0, $limit);
+        }
     }
 
     public function show(){

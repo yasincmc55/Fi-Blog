@@ -26,6 +26,10 @@ Route::group(['prefix'=>'admin/post'] , function(){
     Route::get('/',[PostController::class,'index'])->name('post.index');
     Route::get('/show',[PostController::class,'show'])->name('post.show');
     Route::post('/save',[PostController::class,'save'])->name('post.save');
+    Route::get('/edit/{post}',[PostController::class,'edit'])->name('post.edit');
+    Route::put('/update/{post}',[PostController::class,'update'])->name('post.update');
+    Route::delete('/delete/{post}',[PostController::class,'delete'])->name('post.delete');
+
 });
 
 //category
