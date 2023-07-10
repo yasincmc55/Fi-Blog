@@ -277,6 +277,8 @@
     <script src=" {{asset('assets/dashboard/js/todolist.js')}}"></script>
     <!-- End custom js for this page -->
     <!-- ckeeditor for edit content -->
+    @include('sweetalert::alert')
+
     
     @yield('scripts')
 

@@ -10,7 +10,7 @@
               <div class="card-body">
                 <h4 class="card-title">Kategori Listesi</h4>
                
-                </p>
+              
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -24,13 +24,18 @@
                     @foreach ($categories as  $category)
                       <tr>
                         <td class="py-1">
-                          {{ $category->name }}
+                          {{ $category->getHierarchyName() }}
                         </td>
                         <td> {{ $category->order }} </td>
                       
                         <td> 
-                          <a href=" {{ route('category.edit', ['category'=>$category->id]) }} " class="btn btn-gradient-info btn-rounded btn-fw"> Düzenle </a>
-                          <a href="" class="btn btn-gradient-danger btn-rounded btn-fw"> Sil </a>
+                           <a href=" {{ route('category.edit', ['category'=>$category->id]) }} " class="btn btn-gradient-info btn-rounded btn-fw"> Düzenle </a>
+
+                           <form action="{{ route('category.delete', ['category'=>$category->id]) }}" method="POST" style="display: inline" >
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-gradient-danger btn-rounded btn-fw"> Sil </button>
+                           </form>
                         </td>
                       
                       </tr>

@@ -19,15 +19,27 @@ use App\Http\Controllers\CategoryController;
 
 // admin panel routes
 Route::get('/admin',[DashboardController::class,'index']);
+
 //posts
-Route::get('/admin/posts',[PostController::class,'index'])->name('post.index');
-Route::get('/admin/posts/show',[PostController::class,'show'])->name('post.show');
-Route::post('/admin/posts/save',[PostController::class,'save'])->name('post.save');
+
+Route::group(['prefix'=>'admin/post'] , function(){
+    Route::get('/',[PostController::class,'index'])->name('post.index');
+    Route::get('/show',[PostController::class,'show'])->name('post.show');
+    Route::post('/save',[PostController::class,'save'])->name('post.save');
+});
+
 //category
-Route::get('/admin/category',[CategoryController::class,'index'])->name('category.index');
-Route::get('/admin/category/show' , [CategoryController::class,'show'])->name('category.show');
-Route::post('/admin/category/save' , [CategoryController::class,'store'])->name('category.save');
-Route::get('/admin/category/edit/{category}' , [CategoryController::class,'edit'])->name('category.edit');
+Route::group(['prefix'=>'admin/category'], function(){
+
+    Route::get('/',[CategoryController::class,'index'])->name('category.index');
+    Route::get('/show' , [CategoryController::class,'show'])->name('category.show');
+    Route::post('/save' , [CategoryController::class,'store'])->name('category.save');
+    Route::get('/edit/{category}' , [CategoryController::class,'edit'])->name('category.edit');
+    Route::put('/update/{category}' , [CategoryController::class,'update'])->name('category.update');
+    Route::delete('/delete/{category}' , [CategoryController::class,'delete'])->name('category.delete');
+
+});
+
 
 
 

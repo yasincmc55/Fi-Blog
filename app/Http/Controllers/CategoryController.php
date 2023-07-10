@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+
+
+
+
 
 class CategoryController extends Controller
 {
@@ -29,6 +32,7 @@ class CategoryController extends Controller
          $category->order = $request->order;
          $category->parent_id = $request->parent_id;
          $category->save();
+
          return redirect()->to(route('category.index'));
 
     }
@@ -39,8 +43,27 @@ class CategoryController extends Controller
     //eğer view'e birden fazla değer göndermek istiyorsak compact yapısı kullanılır
 
     public function edit(Category $category){
+       
         $categories = Category::all();
         return view('dashboard.category.edit',compact('categories','category'));
+
+    }
+
+    public function update(Request $request , Category $category){
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->parent_id = $request->parent_id;
+        $category->order = $request->order;
+
+        if($category->update()){
+            return redirect()->to(route('category.index'));
+        }
+
+    }
+
+    public function delete(Category $category){
+       $category->delete();
+       return redirect()->back();
 
     }
 }
