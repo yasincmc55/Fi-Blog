@@ -31,13 +31,13 @@
                         <td class="py-1">
                           <img src="../../assets/images/faces-clipart/pic-1.png" alt="image" />
                         </td>
-                        <td> {{ $post->title }} </td>
+                        <td> {{ Str::limit($post->title,30) }} </td>
                         <td>
-                             {{ $post->content }}
+                             {!! Str::limit($post->content ,40) !!}
                         </td>
 
                         <td>
-                          kategori
+                            {{ $post->category->name}} <!-- post'un ait olduğu kategori ismi -->
                         </td>
 
 

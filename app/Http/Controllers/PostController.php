@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Gallery;
 use Illuminate\Support\Str;
 
 
@@ -14,7 +15,7 @@ class PostController extends Controller
         $posts = Post::all();
 
         return view('dashboard.posts.index',compact('posts')); 
-        $title = limitString($)
+       
     }
 
     private function limitString($string, $limit)
@@ -39,6 +40,22 @@ class PostController extends Controller
           $post->slug = Str::slug($request->title);
 
           $post->save();
+
+          //çoklu resim alma ve kayıt etme
+          if($request->hasFile('images')){
+            $images = $request->file('images');
+
+            foreach( $images as $image ){
+                $gallery = new Gallery();
+                $gallery->post_id = $post->id;
+
+                $path = $image->store('gallery');
+                $gallery->name = $path;
+
+                $gallery->save();
+
+            }
+          }
 
           return redirect()->to(route('post.index'));
           
