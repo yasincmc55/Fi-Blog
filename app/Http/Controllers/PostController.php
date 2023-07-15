@@ -43,14 +43,18 @@ class PostController extends Controller
 
           //çoklu resim alma ve kayıt etme
           if($request->hasFile('images')){
+
             $images = $request->file('images');
 
-            foreach( $images as $image ){
-                $gallery = new Gallery();
-                $gallery->post_id = $post->id;
+            
 
-                $path = $image->store('gallery');
-                $gallery->name = $path;
+            foreach( $images as $image ){
+
+               $gallery = new Gallery();
+
+                $gallery->name = $image->getClientOriginalName();
+                $gallery->path = $image->store('public/images');
+                $gallery->post_id = $post->id;
 
                 $gallery->save();
 

@@ -18,7 +18,7 @@ class PostsTableSeeder extends Seeder
       $faker = Faker::create();
       for($i=0;$i<10;$i++){
         DB::table('posts')->insert([
-           'category_id'=>$faker->numberBetween(26,34),
+           'category_id'=>$faker->numberBetween(1,4),
            'title'=>$faker->sentence,
            'content'=>$faker->paragraph,
            'slug'=>Str::slug($faker->sentence),
