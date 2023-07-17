@@ -18,14 +18,6 @@ class PostController extends Controller
        
     }
 
-    private function limitString($string, $limit)
-    {
-        if (strlen($string) <= $limit) {
-            return $string;
-        } else {
-            return substr($string, 0, $limit);
-        }
-    }
 
     public function show(){
         $categories = Category::all();
@@ -33,6 +25,7 @@ class PostController extends Controller
     }
 
     public function save(Request $request){
+
           $post = new Post();
           $post->title = $request->title;
           $post->content = $request->content;
@@ -40,20 +33,38 @@ class PostController extends Controller
           $post->slug = Str::slug($request->title);
 
           $post->save();
+          
+          //gösterim resmi alma ve kayıt etme
+          if($request->hasFile('main_image')){
+            
+             $image = $request->file('main_image');
+             $ext = $image->getClientOriginalExtension();
+             $random_image_name = uniqid().".".$ext;
+             $path  = $image->storeAs('public/images',$random_image_name);
+
+             $gallery = new Gallery();
+             $gallery->name = $random_image_name;
+             $gallery->path = $path;
+             $gallery->post_id = $post->id;
+             $gallery->is_main = true;
+             $gallery->save();
+             
+
+          }
+
 
           //çoklu resim alma ve kayıt etme
           if($request->hasFile('images')){
 
             $images = $request->file('images');
 
-            
-
             foreach( $images as $image ){
-
-               $gallery = new Gallery();
-
-                $gallery->name = $image->getClientOriginalName();
-                $gallery->path = $image->store('public/images');
+               
+                $gallery = new Gallery();
+                $ext = $image->getClientOriginalExtension();
+                $random_image_name =  uniqid().".".$ext;
+                $gallery->name = $random_image_name;
+                $gallery->path = $image->storeAs('public/images',$random_image_name);
                 $gallery->post_id = $post->id;
 
                 $gallery->save();
@@ -63,7 +74,6 @@ class PostController extends Controller
 
           return redirect()->to(route('post.index'));
           
-    
     }
 }
 

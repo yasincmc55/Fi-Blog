@@ -7,9 +7,14 @@
     <h2>Post Formu</h2>
     <form method="POST" action=" {{route('post.save')}} " enctype="multipart/form-data"  >
         @csrf
+
+        <div class="form-group" >
+          <label for="image">Gösterim Resmi</label>
+          <input class="form-control" type="file" name="main_image" id="main_image" >
+        </div>
        
         <div class="form-group" >
-          <label for="image">Resim</label>
+          <label for="image">Ek Resimler</label>
           <input class="form-control" type="file" name="images[]" id="image" multiple >
 
         </div>

@@ -9,7 +9,8 @@ use App\Models\Post;
 class Gallery extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'name' , 'post_id'];
+    protected $fillable = [ 'name','post_id','path','is_main'];
+
     public function posts(){
         return $this->belongsTo(Post::class);
     }
