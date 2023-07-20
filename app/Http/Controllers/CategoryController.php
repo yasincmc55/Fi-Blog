@@ -7,9 +7,6 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 
 
-
-
-
 class CategoryController extends Controller
 {
     public function index(){
@@ -19,15 +16,15 @@ class CategoryController extends Controller
 
     public function show(){
         $categories = Category::all();
-      
+
         return view('dashboard.category.show')->with('categories',$categories);
     }
 
     public function store(Request $request){
 
         $category = new Category();
-         
-         $category->name = $request->name;       
+
+         $category->name = $request->name;
          $category->slug = Str::slug($request->name);
          $category->order = $request->order;
          $category->parent_id = $request->parent_id;
@@ -43,7 +40,7 @@ class CategoryController extends Controller
     //eğer view'e birden fazla değer göndermek istiyorsak compact yapısı kullanılır
 
     public function edit(Category $category){
-       
+
         $categories = Category::all();
         return view('dashboard.category.edit',compact('categories','category'));
 

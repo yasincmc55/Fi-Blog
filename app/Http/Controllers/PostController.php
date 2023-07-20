@@ -13,15 +13,14 @@ class PostController extends Controller
 {
     public function index(){
         $posts = Post::all();
+       // $posts = Post::with('gallery')->get();
+        return view('dashboard.posts.index',compact('posts'));
 
-        return view('dashboard.posts.index',compact('posts')); 
-       
     }
-
 
     public function show(){
         $categories = Category::all();
-        return view('dashboard.posts.show')->with('categories',$categories);   
+        return view('dashboard.posts.show')->with('categories',$categories);
     }
 
     public function save(Request $request){
@@ -33,10 +32,10 @@ class PostController extends Controller
           $post->slug = Str::slug($request->title);
 
           $post->save();
-          
+
           //gösterim resmi alma ve kayıt etme
           if($request->hasFile('main_image')){
-            
+
              $image = $request->file('main_image');
              $ext = $image->getClientOriginalExtension();
              $random_image_name = uniqid().".".$ext;
@@ -48,7 +47,7 @@ class PostController extends Controller
              $gallery->post_id = $post->id;
              $gallery->is_main = true;
              $gallery->save();
-             
+
 
           }
 
@@ -59,7 +58,7 @@ class PostController extends Controller
             $images = $request->file('images');
 
             foreach( $images as $image ){
-               
+
                 $gallery = new Gallery();
                 $ext = $image->getClientOriginalExtension();
                 $random_image_name =  uniqid().".".$ext;
@@ -73,7 +72,7 @@ class PostController extends Controller
           }
 
           return redirect()->to(route('post.index'));
-          
+
     }
 }
 

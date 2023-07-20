@@ -24,14 +24,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                             
+                          
+
                             @foreach ($posts as $post)
                                 <tr>
                                     <td class="py-1">
-
-                                        @if ($post->gallery->count() > 0)
-                                            <img src="{{ asset('storage/images/'.$post->gallery[0]->name) }}"
-                                              alt="image" />
-                                        @endif
+                                       
+                                        @foreach ($post->gallery as $item)
+                                            @if ($item->is_main)
+                                                <img src="{{ asset('storage/images/' . $item->name) }}" alt="image" />
+                                            @endif
+                                        @endforeach
 
 
                                     </td>
